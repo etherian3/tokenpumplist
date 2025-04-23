@@ -19,3 +19,5 @@ contract Token is ERC20 {
         _mint(msg.sender, _totalSupply);
     }
 }
+
+// we are gonna mint 1000000/1M token or in crypto desimal 1000000000000000000000000/1M with crypto desimal
