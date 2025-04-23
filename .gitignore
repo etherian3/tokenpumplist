@@ -45,6 +45,13 @@ node_modules
 # Hardhat files
 /cache
 /artifacts
+artifacts
+.deps
+/.deps
+
+# Ignore Hardhat artifacts and dependencies
+contracts/artifacts/
+contracts/.deps/
 
 # TypeChain files
 /typechain
