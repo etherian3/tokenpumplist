@@ -52,6 +52,7 @@ artifacts
 # Ignore Hardhat artifacts and dependencies
 contracts/artifacts/
 contracts/.deps/
+contracts/.states/
 
 # TypeChain files
 /typechain
