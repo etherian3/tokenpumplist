@@ -56,11 +56,21 @@ describe("Factory", function () {
     it("Should set the supply", async function () {
       const { factory, token } = await loadFixture(deployFactoryFixture);
 
-      const totalSupply = await token.totalSupply();
+      const totalSupply = ethers.parseUnits("1000000", 18);
 
       expect(await token.balanceOf(await factory.getAddress())).to.equal(
         totalSupply
       );
+    });
+
+    it("Should update ETH balance", async function () {
+      const { factory } = await loadFixture(deployFactoryFixture);
+
+      const balance = await ethers.provider.getBalance(
+        await factory.getAddress()
+      );
+
+      expect(balance).to.equal(FEE);
     });
   });
 });
