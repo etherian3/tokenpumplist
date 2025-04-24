@@ -72,5 +72,21 @@ describe("Factory", function () {
 
       expect(balance).to.equal(FEE);
     });
+
+    it("Should create the sale", async function () {
+      const { factory, token, creator } = await loadFixture(
+        deployFactoryFixture
+      );
+
+      const count = await factory.totalTokens();
+      expect(count).to.equal(1);
+
+      const sale = await factory.getTokenSale(0);
+      expect(sale.token).to.equal(await token.getAddress());
+      expect(sale.creator).to.equal(creator.address);
+      expect(sale.sold).to.equal(0);
+      expect(sale.raised).to.equal(0);
+      expect(sale.isOpen).to.equal(true);
+    });
   });
 });
