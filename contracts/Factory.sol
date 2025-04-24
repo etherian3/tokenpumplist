@@ -32,7 +32,14 @@ contract Factory {
         return tokenToSale[tokens[_index]];
     }
 
+    function getCost(uint256 _sold) public pure returns(uint256) {
+        uint256 floor = 0.0001 ether;
+        uint256 step = 0.0001 ether;
+        uint256 increment = 10000 ether;
 
+        uint256 cost = (step * (_sold / increment)) + floor;
+        return cost;
+    }
 
     function create(
         string memory _name, 
@@ -69,8 +76,16 @@ contract Factory {
         TokenSale storage sale = tokenToSale[_token];
         // Check conditions
 
+        // Calculate the price of 1 token based upon total bought
+        uint256 cost = getCost(sale.sold);
+
+        uint256 price = cost * (_amount / 10 ** 18);
+
+        // Make sure enough eth is sent
+
         // Update the sale
         sale.sold += _amount;
+        sale.raised += price;
 
         // Make sure fund raising goal isn't met
 
