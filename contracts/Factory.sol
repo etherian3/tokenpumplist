@@ -20,6 +20,8 @@ contract Factory {
         bool isOpen;
     }
 
+    event Created(address indexed token);
+
     constructor(uint256 _fee) {
         fee = _fee;
         owner = msg.sender;
@@ -36,7 +38,7 @@ contract Factory {
         string memory _symbol 
         ) external payable {
         // Make sure that the fee is correct
-        require(msg.value >= fee, "Not enough ether!")
+        require(msg.value >= fee, "Not enough ether!");
 
         // Create a new token 
         Token token = new Token(msg.sender, _name, _symbol, 1_000_000 ether);
@@ -59,5 +61,6 @@ contract Factory {
         tokenToSale[address(token)] = sale;
 
         // Tell people it's live
+        emit Created(address(token));
     }
 }
