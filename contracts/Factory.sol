@@ -21,6 +21,7 @@ contract Factory {
     }
 
     event Created(address indexed token);
+    event Buy(address indexed token, uint256 amount);
 
     constructor(uint256 _fee) {
         fee = _fee;
@@ -65,8 +66,18 @@ contract Factory {
     }
 
     function buy(address _token, uint256 _amount) external payable {
+        TokenSale storage sale = tokenToSale[_token];
+        // Check conditions
+
+        // Update the sale
+        sale.sold += _amount;
+
+        // Make sure fund raising goal isn't met
+
 
         Token(_token).transfer(msg.sender, _amount);
         
+        // Emit an event
+        emit Buy(_token, _amount);
     }
 }
