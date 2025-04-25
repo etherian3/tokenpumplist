@@ -174,4 +174,19 @@ describe("Factory", function () {
       expect(balance).to.equal(ethers.parseUnits("980000", 18));
     });
   });
+
+  describe("Withdrawing fees", function () {
+    it("Should update ETH balances", async function () {
+      const { factory, deployer } = await loadFixture(deployFactoryFixture);
+
+      const transaction = await factory.connect(deployer).withdraw(FEE);
+      await transaction.wait();
+
+      const balance = await ethers.provider.getBalance(
+        await factory.getAddress()
+      );
+
+      expect(balance).to.equal(0);
+    });
+  });
 });
