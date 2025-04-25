@@ -146,4 +146,32 @@ describe("Factory", function () {
       expect(cost).to.be.equal(ethers.parseUnits("0.0002"));
     });
   });
+
+  describe("Depositing", async function () {
+    const AMOUNT = ethers.parseUnits("10000", 18);
+    const COST = ethers.parseUnits("2", 18);
+
+    it("Sale should be closed and successfully deposited", async function () {
+      const { factory, token, creator, buyer } = await loadFixture(
+        buyTokenFixture
+      );
+
+      // Buy tokens again to reach target
+      const buyTx = await factory
+        .connect(buyer)
+        .buy(await token.getAddress(), AMOUNT, { value: COST });
+      await buyTx.wait();
+
+      const sale = await factory.tokenToSale(await token.getAddress());
+      expect(sale.isOpen).to.equal(false);
+
+      const depositTx = await factory
+        .connect(creator)
+        .deposit(await token.getAddress());
+      await depositTx.wait();
+
+      const balance = await token.balanceOf(creator.address);
+      expect(balance).to.equal(ethers.parseUnits("980000", 18));
+    });
+  });
 });
