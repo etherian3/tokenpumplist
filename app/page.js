@@ -21,6 +21,7 @@ export default function Home() {
   const [factory, setFactory] = useState(null);
   const [fee, setFee] = useState(0);
   const [showCreate, setShowCreate] = useState(false);
+  const [tokens, setTokens] = useState([]);
 
   function toggleCreate() {
     showCreate ? setShowCreate(false) : setShowCreate(true);
@@ -41,6 +42,31 @@ export default function Home() {
 
     const fee = await factory.fee();
     setFee(fee);
+
+    const totalTokens = await factory.totalTokens();
+    const tokens = [];
+
+    for (let i = 0; i < totalTokens; i++) {
+      if (i == 8) {
+        break;
+      }
+
+      const tokenSale = await factory.getTokenSale(i);
+
+      const token = {
+        token: tokenSale.token,
+        name: tokenSale.name,
+        creator: tokenSale.creator,
+        sold: tokenSale.sold,
+        raised: tokenSale.raised,
+        isOpen: tokenSale.isOpen,
+        image: images[i],
+      };
+
+      tokens.push(token);
+    }
+
+    setTokens(tokens.reverse());
   }
 
   useEffect(() => {
