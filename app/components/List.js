@@ -4,7 +4,15 @@ function List({ toggleCreate, fee, provider, factory }) {
   async function listHandler(form) {
     const name = form.get("name");
     const ticker = form.get("ticker");
-    console.log("Submited...", name, ticker);
+
+    const signer = await provider.getSigner();
+
+    const transaction = await factory.connect(signer).create(name, ticker, {
+      value: fee,
+    });
+    await transaction.wait();
+
+    toggleCreate();
   }
 
   return (
