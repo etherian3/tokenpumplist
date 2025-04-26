@@ -45,6 +45,12 @@ export default function Home() {
   return (
     <div className="page">
       <Header account={account} setAccount={setAccount} />
+
+      <main>
+        <div className="create">
+          <button className="btn--fancy">{"[ Start a new Token ]"}</button>
+        </div>
+      </main>
     </div>
   );
 }
