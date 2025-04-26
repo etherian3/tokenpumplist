@@ -22,9 +22,16 @@ export default function Home() {
   const [fee, setFee] = useState(0);
   const [showCreate, setShowCreate] = useState(false);
   const [tokens, setTokens] = useState([]);
+  const [token, setToken] = useState(null);
+  const [showTrade, setShowTrade] = useState(false);
 
   function toggleCreate() {
     showCreate ? setShowCreate(false) : setShowCreate(true);
+  }
+
+  function toggleTrade(token) {
+    setToken(token);
+    showTrade ? setShowTrade(false) : setShowTrade(true);
   }
 
   async function loadBlockchainData() {
@@ -87,12 +94,37 @@ export default function Home() {
               : "[ Start a new Token ]"}
           </button>
         </div>
+
+        <div className="listings">
+          <h1>New listings</h1>
+
+          <div className="tokens">
+            {!account ? (
+              <p>Please connect</p>
+            ) : tokens.length === 0 ? (
+              <p>No tokens listed</p>
+            ) : (
+              tokens.map((token, index) => (
+                <Token toggleTrade={toggleTrade} token={token} key={index} />
+              ))
+            )}
+          </div>
+        </div>
       </main>
 
       {showCreate && (
         <List
           toggleCreate={toggleCreate}
           fee={fee}
+          provider={provider}
+          factory={factory}
+        />
+      )}
+
+      {showTrade && (
+        <Trade
+          toggleTrade={toggleTrade}
+          token={token}
           provider={provider}
           factory={factory}
         />
