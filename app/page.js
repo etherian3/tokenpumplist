@@ -52,8 +52,14 @@ export default function Home() {
       <Header account={account} setAccount={setAccount} />
 
       <main>
-        <div onClick={toggleCreate} className="create">
-          <button className="btn--fancy">{"[ Start a new Token ]"}</button>
+        <div onClick={factory && account && toggleCreate} className="create">
+          <button className="btn--fancy">
+            {!factory
+              ? "[ Searching a contract... ]"
+              : !account
+              ? "[ Please connect ]"
+              : "[ Start a new Token ]"}
+          </button>
         </div>
       </main>
 
