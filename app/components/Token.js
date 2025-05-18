@@ -4,7 +4,7 @@ function Token({ toggleTrade, token }) {
   return (
     <button onClick={() => toggleTrade(token)} className="token">
       <div className="token__details">
-        <img src={token.image} alt={token.name} width={256} height={256} />
+        <img src={token.image} alt={token.name} />
         <p>
           created by{" "}
           {token.creator.slice(0, 6) + "..." + token.creator.slice(38, 42)}
