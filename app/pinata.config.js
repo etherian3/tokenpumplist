@@ -1,0 +1,7 @@
+// Konfigurasi Pinata untuk IPFS
+export const pinataConfig = {
+  apiKey: '02bc0502a4d810eb31f5',
+  apiSecret: '2bd8ec630ad55fec84d0de8271e15faa5ee75993338f3e1dbdd6086d2818ea64',
+  jwt: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySW5mb3JtYXRpb24iOnsiaWQiOiJmOTY4ZjNhYy0xOTgyLTQ3NWUtYjMwYS1mZjkyMDdjZTRlM2EiLCJlbWFpbCI6InJpYW56aXdhbGtlckBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwicGluX3BvbGljeSI6eyJyZWdpb25zIjpbeyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJGUkExIn0seyJkZXNpcmVkUmVwbGljYXRpb25Db3VudCI6MSwiaWQiOiJOWUMxIn1dLCJ2ZXJzaW9uIjoxfSwibWZhX2VuYWJsZWQiOmZhbHNlLCJzdGF0dXMiOiJBQ1RJVkUifSwiYXV0aGVudG', // Alternatif untuk menggunakan JWT
+  gateway: 'https://crimson-wooden-parakeet-235.mypinata.cloud/ipfs/'
+}; 
