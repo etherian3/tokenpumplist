@@ -1,6 +1,7 @@
 :root {
   --background: #1B1D29;
   --foreground: #ededed;
+  --spacing-unit: 0.8rem;
 }
 
 html,
@@ -15,6 +16,7 @@ body {
   font-family: "Nabla", Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  font-size: 14px;
 }
 
 * {
@@ -29,13 +31,20 @@ h3 {
   font-family: "Nabla";
 }
 
+h1 {
+  font-size: 1.8rem;
+}
+
 h2 {
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 .page {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 var(--spacing-unit);
 }
 
 /* HEADER STYLES */
@@ -47,12 +56,12 @@ header {
   justify-content: space-between;
   align-items: center;
 
-  padding: 2em 0;
+  padding: 1.5em 0;
 }
 
 header .brand {
   font-family: "Nabla";
-  font-size: 2rem;
+  font-size: 1.8rem;
   transform: rotate(-5deg);
 }
 
@@ -61,7 +70,7 @@ header .brand {
 .btn--fancy,
 input[type="submit"] {
   font-family: "Nabla";
-  font-size: 1.5rem;
+  font-size: 1.2rem;
 
   background: transparent;
   border: none;
@@ -76,12 +85,12 @@ header .btn--fancy {
 }
 
 main .create .btn--fancy {
-  font-size: 2rem;
+  font-size: 1.6rem;
 }
 
 .btn--fancy:hover,
 input[type="submit"]:hover {
-  transform: scale(1.2);
+  transform: scale(1.1);
 }
 
 /* MAIN LAYOUT */
@@ -91,6 +100,7 @@ main {
 
   display: grid;
   grid-template-columns: repeat(12, 1fr);
+  gap: var(--spacing-unit);
 
   text-align: center;
 }
@@ -98,7 +108,8 @@ main {
 main .create {
   grid-column: 1 / 13;
   place-content: center;
-  min-height: 30svh;
+  min-height: 20svh;
+  margin-bottom: var(--spacing-unit);
 }
 
 /* DISPLAY TOKEN LISTINGS */
@@ -110,32 +121,34 @@ main .listings {
 main .listings h1 {
   font-family: "Arial";
   font-weight: 800;
-  padding: 1em;
+  padding: 0.8em;
+  font-size: 1.5rem;
 }
 
 .tokens {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 0));
-  gap: 1em;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1.5em;
   place-content: center;
   text-align: center;
+  padding: 0 var(--spacing-unit);
 }
 
 .tokens p {
   grid-column: 1 / -1;
   font-family: "Arial";
-  font-size: 1.50rem;
+  font-size: 1.2rem;
 }
 
 .token {
   background: none;
   border: 1px solid transparent;
   color: var(--foreground);
-  padding: 1em;
-
-  font-size: 1.05rem;
-
+  padding: 0.8em;
+  font-size: 0.9rem;
   cursor: pointer;
+  transition: all 0.2s ease;
+  max-width: 100%;
 }
 
 .token:nth-child(1) {
@@ -144,6 +157,8 @@ main .listings h1 {
 
 .token:hover {
   border: 1px solid var(--foreground);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
 }
 
 @keyframes blink {
@@ -174,15 +189,31 @@ main .listings h1 {
   text-align: center;
 }
 
+.token__details img {
+  max-width: 100%;
+  height: auto;
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 0.5em;
+}
+
 .token__details p {
-  font-size: 0.95rem;
+  font-size: 0.8rem;
   text-transform: lowercase;
-  padding: 0.5em;
+  padding: 0.3em;
   width: 100%;
 }
 
 .token__details .name {
-  font-size: 1.40rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+/* Tambahkan styling untuk body saat modal terbuka */
+body.modal-open {
+  overflow: hidden;
 }
 
 /* CREATE TOKEN FORM */
@@ -190,25 +221,34 @@ main .listings h1 {
 .list {
   width: 100vw;
   height: 100vh;
-  background-color: rgba(0, 0, 0, 0.9);
-
+  background-color: rgba(0, 0, 0, 0.95);
+  
   position: fixed;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: none;
+  
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 3em;
+  padding: 2em 1em 4em;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.list h2 {
+  margin-bottom: 0.8em;
 }
 
 .list__description {
   font-family: "Arial";
-  font-size: 1.10rem;
+  font-size: 0.9rem;
   font-weight: 400;
   text-transform: lowercase;
-  padding: 1em 0 0;
+  padding: 0.4em 0;
+  margin-bottom: 0.8em;
 }
 
 .list form {
@@ -216,8 +256,10 @@ main .listings h1 {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 2em;
-  padding: 2em;
+  gap: 1.2em;
+  padding: 0.8em;
+  width: 100%;
+  max-width: 400px;
 }
 
 .list form input[type="text"] {
@@ -225,9 +267,19 @@ main .listings h1 {
   color: var(--foreground);
   border: none;
 
-  width: 200px;
-  padding: 1.50em;
+  width: 100%;
+  padding: 1.2em;
   border-radius: 6px;
+}
+
+/* Tambahkan container untuk tombol-tombol */
+.list-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8em;
+  width: 100%;
+  margin-top: 0.8em;
+  margin-bottom: 1.5em;
 }
 
 /* TRADE TOKENS */
@@ -244,19 +296,21 @@ main .listings h1 {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 3em;
+  padding-top: 2em;
+  overflow-y: auto;
+  max-height: 100vh;
 }
 
 .trade p {
   font-family: "Arial";
-  font-size: 1.10rem;
+  font-size: 0.9rem;
   text-transform: lowercase;
 }
 
 .trade .disclaimer {
-  font-size: 1.50rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  padding: 2em;
+  padding: 1.5em;
 }
 
 .trade form {
@@ -264,8 +318,10 @@ main .listings h1 {
   justify-content: center;
   align-items: center;
   flex-direction: column;
-  gap: 2em;
-  padding: 2em;
+  gap: 1.5em;
+  padding: 1.5em;
+  width: 100%;
+  max-width: 400px;
 }
 
 .trade form input[type="number"] {
@@ -273,7 +329,176 @@ main .listings h1 {
   color: var(--foreground);
   border: none;
 
-  width: 200px;
-  padding: 1.50em;
+  width: 100%;
+  padding: 1.2em;
   border-radius: 6px;
+}
+
+/* Image Upload Styles */
+.image-upload {
+  margin: 12px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.image-upload label {
+  margin-bottom: 4px;
+  font-weight: 600;
+  font-family: "Arial";
+  font-size: 0.9rem;
+}
+
+.image-upload input[type="file"] {
+  background-color: #111;
+  color: #fff;
+  padding: 8px;
+  border: 1px solid #333;
+  border-radius: 4px;
+  width: 100%;
+  font-family: "Arial";
+  font-size: 0.9rem;
+}
+
+.image-preview {
+  margin: 8px 0;
+  display: flex;
+  justify-content: center;
+  background-color: #111;
+  padding: 8px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  width: 100%;
+  max-height: 200px;
+  overflow: hidden;
+}
+
+.image-preview img {
+  max-width: 100%;
+  max-height: 180px;
+  object-fit: contain;
+}
+
+.error-message {
+  color: #ff5555;
+  margin: 8px 0;
+  padding: 6px;
+  background-color: rgba(255, 0, 0, 0.1);
+  border-radius: 4px;
+  border: 1px solid #ff5555;
+  font-size: 0.9rem;
+}
+
+/* Disabled button style */
+input[type="submit"]:disabled {
+  background-color: #444;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Spinner Styles */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px;
+}
+
+.spinner {
+  border: 3px solid rgba(255, 255, 255, 0.1);
+  border-radius: 50%;
+  border-top: 3px solid #fff;
+  width: 20px;
+  height: 20px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Uploading Container Styles */
+.uploading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #111;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  margin: 8px 0;
+}
+
+.uploading-container p {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Disabled button style */
+button:disabled {
+  background-color: #444;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+/* Loading Container Styles */
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #111;
+  padding: 12px;
+  border-radius: 4px;
+  border: 1px solid #333;
+  margin: 8px 0;
+  min-height: 150px;
+}
+
+.loading-container p {
+  margin-top: 8px;
+  font-size: 0.9rem;
+  color: #ccc;
+}
+
+/* Media queries untuk tampilan mobile */
+@media screen and (max-width: 768px) {
+  .list {
+    padding: 0.8em 0.4em 1.5em;
+  }
+  
+  .list h2 {
+    font-size: 1.3rem;
+  }
+  
+  .list form {
+    padding: 0.4em;
+  }
+  
+  .image-preview {
+    max-height: 180px;
+  }
+  
+  .image-preview img {
+    max-height: 120px;
+  }
+  
+  .list-buttons {
+    margin-top: 0.4em;
+    margin-bottom: 0.8em;
+  }
+  
+  .tokens {
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 1em;
+  }
+  
+  .token__details img {
+    width: 140px;
+    height: 140px;
+  }
 }
