@@ -151,9 +151,9 @@ main .listings h1 {
   max-width: 100%;
 }
 
-.token:nth-child(1) {
+/* .token:nth-child(1) {
   animation: blink forwards 5s ease infinite;
-}
+} */
 
 .token:hover {
   border: 1px solid var(--foreground);
