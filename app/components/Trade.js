@@ -6,6 +6,16 @@ function Trade({ toggleTrade, token, provider, factory }) {
   const [limit, setLimit] = useState(0);
   const [cost, setCost] = useState(0);
 
+  // Tambahkan class modal-open ke body saat komponen dimuat
+  useEffect(() => {
+    document.body.classList.add('modal-open');
+    
+    // Hapus class saat komponen di-unmount
+    return () => {
+      document.body.classList.remove('modal-open');
+    };
+  }, []);
+
   async function buyHandler(form) {
     const amount = form.get("amount");
 
@@ -38,6 +48,11 @@ function Trade({ toggleTrade, token, provider, factory }) {
     getSaleDetails();
   }, []);
 
+  const handleCancel = (e) => {
+    e.preventDefault();
+    toggleTrade();
+  };
+
   return (
     <div className="trade">
       <h2>trade</h2>
@@ -54,7 +69,16 @@ function Trade({ toggleTrade, token, provider, factory }) {
       </div>
 
       {token.sol >= limit || token.raised >= target ? (
-        <p className="disclaimer">target reached!</p>
+        <div>
+          <p className="disclaimer">target reached!</p>
+          <button 
+            type="button" 
+            onClick={handleCancel} 
+            className="btn--fancy"
+          >
+            [ cancel ]
+          </button>
+        </div>
       ) : (
         <form action={buyHandler}>
           <input
@@ -64,13 +88,18 @@ function Trade({ toggleTrade, token, provider, factory }) {
             max={10000}
             placeholder="1"
           />
-          <input type="submit" value="[ buy ]" />
+          <div className="list-buttons">
+            <input type="submit" value="[ buy ]" />
+            <button 
+              type="button" 
+              onClick={handleCancel} 
+              className="btn--fancy"
+            >
+              [ cancel ]
+            </button>
+          </div>
         </form>
       )}
-
-      <button onClick={toggleTrade} className="btn--fancy">
-        [ cancel ]
-      </button>
     </div>
   );
 }
